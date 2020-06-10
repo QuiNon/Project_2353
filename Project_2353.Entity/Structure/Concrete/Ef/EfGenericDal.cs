@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using Project_2353.Entity.Abstract;
 using Project_2353.Entity.Contexts;
+using Project_2353.Entity.Structure.Abstract;
 
 namespace Project_2353.Entity.Structure.Concrete.Ef
 {

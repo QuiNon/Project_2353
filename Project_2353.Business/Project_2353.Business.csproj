@@ -5,6 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Project_2353.Core\Project_2353.Core.csproj" />
+      <ProjectReference Include="..\Project_2353.DTO\Project_2353.DTO.csproj" />
       <ProjectReference Include="..\Project_2353.Entity\Project_2353.Entity.csproj" />
     </ItemGroup>
 

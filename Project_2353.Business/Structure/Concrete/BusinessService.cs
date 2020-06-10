@@ -2,6 +2,7 @@
 using Project_2353.Business.Concrete;
 using Project_2353.Business.Structure.Abstract;
 using Project_2353.Entity.Abstract;
+using Project_2353.Entity.Structure.Abstract;
 
 namespace Project_2353.Business.Structure.Concrete
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Query;
 
-namespace Project_2353.Entity.Abstract
+namespace Project_2353.Entity.Structure.Abstract
 {
     public interface IGenericDal<T> where T:class
     {
