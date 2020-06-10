@@ -14,5 +14,5 @@ namespace Project_2353.DTO.EntityDTOS
             this.UserName = entity.UserName;
             // this.CreatedDateTime = entity.CreatedDateTime;
         }
-    }
+    } 
 }

@@ -4,6 +4,7 @@ using Project_2353.Business.Abstract;
 using Project_2353.Core.Factory.ResultFactory;
 using Project_2353.DTO.EntityDTOS;
 using Project_2353.Entity.Abstract;
+using Project_2353.Entity.Entities;
 using Project_2353.Entity.Structure.Abstract;
 
 namespace Project_2353.Business.Concrete
@@ -19,7 +20,14 @@ namespace Project_2353.Business.Concrete
 
         public ProcessResult RegisterUser(UserDTO user)
         {
-            _unitOfWork.User.Add(user);
+            _unitOfWork.User.Add(new UserEntity()
+            {
+                Email = user.Email,
+                Firstname = user.Firstname,
+                LastName = user.LastName,
+                UserName = user.UserName
+            });
+            var saveRes = _unitOfWork.SaveChanges();
             return _unitOfWork.CreateResult().SuccessAddResult();
         }
 

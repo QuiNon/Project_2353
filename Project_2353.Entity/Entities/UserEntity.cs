@@ -3,7 +3,7 @@
 namespace Project_2353.Entity.Entities
 {
     public class UserEntity : _BaseEntity
-    {
+    { 
         [Required(ErrorMessage = "UserName is required")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Name Should be minimum 3 characters and a maximum of 100 characters")]
         [DataType(DataType.Text)]

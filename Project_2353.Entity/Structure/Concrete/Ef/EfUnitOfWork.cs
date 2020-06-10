@@ -24,10 +24,17 @@ namespace Project_2353.Entity.Structure.Concrete.Ef
         
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            _dbContext.Dispose();
         }
 
         private IUserDal _user;
         public IUserDal User => _user ??= new EfUserDal(new EfGenericDal<UserEntity>(_dbContext));
+      
+        
+        public int SaveChanges()
+        { 
+                var i = _dbContext.SaveChanges(); 
+                return i;  
+        }
     }
 }

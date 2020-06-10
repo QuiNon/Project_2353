@@ -8,5 +8,7 @@ namespace Project_2353.Entity.Structure.Abstract
     {
         IProcessResult CreateResult();
         IUserDal User { get; }
+        
+        int SaveChanges();
     }
 }
