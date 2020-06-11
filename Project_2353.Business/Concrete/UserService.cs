@@ -21,11 +21,11 @@ namespace Project_2353.Business.Concrete
         public ProcessResult RegisterUser(UserAddDTO user)
         {
             var dalResult = _unitOfWork.User.Add(new UserEntity(
-                    email: user.Email,
-                    firstname: user.FirstName,
-                    lastName: user.LastName,
-                    userName: user.UserName
-                ));
+                email: user.Email,
+                firstname: user.FirstName,
+                lastName: user.LastName,
+                userName: user.UserName
+            ));
             if (!dalResult.State)
                 return dalResult;
             var saveRes = _unitOfWork.SaveChanges();

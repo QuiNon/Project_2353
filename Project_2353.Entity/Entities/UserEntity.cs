@@ -34,9 +34,7 @@ namespace Project_2353.Entity.Entities
         [DataType(DataType.Text)]
         public string UserNameNormalized { get; set; }
 
-        [RegularExpression(
-            "^(([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5}){1,25})+)*$",
-            ErrorMessage = "Please write valid email address")]
+        [DataType(DataType.EmailAddress)]
         [Required(ErrorMessage = "*")]
         [StringLength(256)]
         public string Email { get; set; }
