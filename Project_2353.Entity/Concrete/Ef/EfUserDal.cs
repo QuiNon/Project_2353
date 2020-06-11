@@ -36,16 +36,16 @@ namespace Project_2353.Entity.Concrete.Ef
 
         public ProcessResult Add(UserEntity entity)
         {
-            if (string.IsNullOrEmpty(entity.UserName))
+            if (string.IsNullOrWhiteSpace(entity.UserName))
                 return new FailAddResult("User name cannot be empty");
 
-            if (string.IsNullOrEmpty(entity.Firstname))
+            if (string.IsNullOrWhiteSpace(entity.Firstname))
                 return new FailAddResult("First name cannot be empty");
 
-            if (string.IsNullOrEmpty(entity.LastName))
+            if (string.IsNullOrWhiteSpace(entity.LastName))
                 return new FailAddResult("Last name cannot be empty");
 
-            if (string.IsNullOrEmpty(entity.Email))
+            if (string.IsNullOrWhiteSpace(entity.Email))
                 return new FailAddResult("Email cannot be empty");
 
 
@@ -79,16 +79,16 @@ namespace Project_2353.Entity.Concrete.Ef
             if (currentEntity == null)
                 return new FailUpdateResult("Invalid User");
 
-            if (string.IsNullOrEmpty(entity.UserName))
+            if (string.IsNullOrWhiteSpace(entity.UserName))
                 return new FailUpdateResult("User name cannot be empty");
 
-            if (string.IsNullOrEmpty(entity.Firstname))
+            if (string.IsNullOrWhiteSpace(entity.Firstname))
                 return new FailUpdateResult("First name cannot be empty");
 
-            if (string.IsNullOrEmpty(entity.LastName))
+            if (string.IsNullOrWhiteSpace(entity.LastName))
                 return new FailUpdateResult("Last name cannot be empty");
 
-            if (string.IsNullOrEmpty(entity.Email))
+            if (string.IsNullOrWhiteSpace(entity.Email))
                 return new FailUpdateResult("Email cannot be empty");
 
 
@@ -102,7 +102,7 @@ namespace Project_2353.Entity.Concrete.Ef
                 return new FailUpdateResult("LastName Should be minimum 3 characters and a maximum of 50 characters ");
 
 
-            var alreadyExist = _entity.GetAll().Any(x => x.Id!=currentEntity.Id&& x.UserNameNormalized == entity.UserName.ToLower());
+            var alreadyExist = _entity.GetAll().Any(x => x.Id != currentEntity.Id && x.UserNameNormalized == entity.UserName.ToLower());
             if (alreadyExist)
                 return new FailUpdateResult("Username cannot use");
 

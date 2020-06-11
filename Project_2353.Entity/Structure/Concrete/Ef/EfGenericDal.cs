@@ -40,35 +40,60 @@ namespace Project_2353.Entity.Structure.Concrete.Ef
 
         public ProcessResult Add(T entity)
         {
-            _dbSet.Add(entity); 
-            var returnModel = new SuccessAddResult();
-            returnModel.returnObj = entity;
-            return returnModel;
+            try
+            {
+                _dbSet.Add(entity);
+
+                var returnModel = new SuccessAddResult();
+                returnModel.returnObj = entity;
+                return returnModel;
+            }
+            catch (Exception e)
+            {
+                Project2353DefaultDbContext.SaveLog(e.Message);
+                return new FailAddResult();
+            }
         }
 
 
         public ProcessResult Delete(T entity)
         {
-            var x = GetAll().FirstOrDefault(x => x.Id == entity.Id);
-            if (x == null)
+            try
+            {
+                var x = GetAll().FirstOrDefault(x => x.Id == entity.Id);
+                if (x == null)
+                    return new FailDeleteResult();
+
+                x.IsDeleted = true;
+
+                _dbSet.Attach(x);
+                _dbContext.Entry(x).State = EntityState.Modified;
+
+                var returnModel = new SuccessDeleteResult();
+                return returnModel;
+            }
+            catch (Exception e)
+            {
+                Project2353DefaultDbContext.SaveLog(e.Message);
                 return new FailDeleteResult();
-
-            x.IsDeleted = true;
-
-            _dbSet.Attach(x);
-            _dbContext.Entry(x).State = EntityState.Modified;
-
-            var returnModel = new SuccessDeleteResult();
-            return returnModel;
+            }
         }
 
         public ProcessResult Edit(T entity)
         {
-            _dbSet.Attach(entity);
-            _dbContext.Entry(entity).State = EntityState.Modified;
+            try
+            {
+                _dbSet.Attach(entity);
+                _dbContext.Entry(entity).State = EntityState.Modified;
 
-            var returnModel = new SuccessUpdateResult();
-            return returnModel;
+                var returnModel = new SuccessUpdateResult();
+                return returnModel;
+            }
+            catch (Exception e)
+            {
+                Project2353DefaultDbContext.SaveLog(e.Message);
+                return new FailUpdateResult();
+            }
         }
 
         public ProcessResult Edit(List<T> entities)
