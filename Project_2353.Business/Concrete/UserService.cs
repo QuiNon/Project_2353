@@ -20,7 +20,7 @@ namespace Project_2353.Business.Concrete
 
         public ProcessResult RegisterUser(UserDTO user)
         {
-            _unitOfWork.User.Add(new UserEntity()
+            var dalResult= _unitOfWork.User.Add(new UserEntity()
             {
                 Email = user.Email,
                 Firstname = user.Firstname,

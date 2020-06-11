@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Query;
+using Project_2353.Core.Factory.ResultFactory;
 using Project_2353.Entity.Abstract;
 using Project_2353.Entity.Entities;
 using Project_2353.Entity.Structure.Concrete.Ef;
@@ -33,24 +34,43 @@ namespace Project_2353.Entity.Concrete.Ef
             return _entity.Include(expression);
         }
 
-        public UserEntity Add(UserEntity entity)
+        public ProcessResult Add(UserEntity entity)
         {
+            
+            if(string.IsNullOrEmpty(entity.UserName))
+                return new FailAddResult("User name cannot use");
+            
+            if(string.IsNullOrEmpty(entity.Firstname))
+                return new FailAddResult("First name cannot be empty");
+            
+            if(string.IsNullOrEmpty(entity.LastName))
+                return new FailAddResult("Last name cannot be empty");
+            
+            if(string.IsNullOrEmpty(entity.Email))
+                return new FailAddResult("Email cannot be empty");
+             
+            
+            
+            var alreadyExist = _entity.GetAll().Any(x => x.UserNameNormalized == entity.UserName.ToLower());
+            if(alreadyExist)
+                return new FailAddResult("Username cannot use");
+                
             return _entity.Add(entity);
         }
 
-        public void Delete(UserEntity entity)
+        public ProcessResult Delete(UserEntity entity)
         {
-            _entity.Delete(entity);
+            return _entity.Delete(entity);
         }
 
-        public void Edit(UserEntity entity)
+        public ProcessResult Edit(UserEntity entity)
         {
-            _entity.Edit(entity);
+            return _entity.Edit(entity);
         }
 
-        public void Edit(List<UserEntity> entities)
+        public ProcessResult Edit(List<UserEntity> entities)
         {
-            _entity.Edit(entities);
+            return _entity.Edit(entities);
         }
     }
 }

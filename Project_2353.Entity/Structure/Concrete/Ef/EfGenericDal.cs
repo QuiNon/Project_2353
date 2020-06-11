@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using Project_2353.Core.Factory.ResultFactory;
 using Project_2353.Entity.Abstract;
 using Project_2353.Entity.Contexts;
 using Project_2353.Entity.Structure.Abstract;
@@ -36,31 +37,44 @@ namespace Project_2353.Entity.Structure.Concrete.Ef
             return _dbSet.Include(expression);
         }
 
-        public T Add(T entity)
+        public ProcessResult Add(T entity)
         {
-            _dbSet.Add(entity); 
-            return entity;
+            _dbSet.Add(entity);
+            var returnModel = new SuccessAddResult();
+            returnModel.returnObj = entity;
+            return returnModel;
         }
 
 
-        public void Delete(T entity)
-        {
-            _dbSet.Attach(entity);
-            _dbContext.Entry(entity).State = EntityState.Modified;
-        }
-
-        public void Edit(T entity)
+        public ProcessResult Delete(T entity)
         {
             _dbSet.Attach(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;
+
+            var returnModel = new SuccessDeleteResult();
+            return returnModel;
         }
 
-        public void Edit(List<T> entities)
+        public ProcessResult Edit(T entity)
+        {
+            _dbSet.Attach(entity);
+            _dbContext.Entry(entity).State = EntityState.Modified;
+
+            var returnModel = new SuccessUpdateResult();
+            return returnModel;
+        }
+
+        public ProcessResult Edit(List<T> entities)
         {
             foreach (var entity in entities)
             {
-                Edit(entity);
+                var result = Edit(entity);
+                if (!result.State)
+                    return new FailDeleteResult();
             }
+
+            var returnModel = new SuccessUpdateResult();
+            return returnModel;
         }
     }
 }
