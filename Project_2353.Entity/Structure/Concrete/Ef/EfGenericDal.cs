@@ -40,7 +40,7 @@ namespace Project_2353.Entity.Structure.Concrete.Ef
 
         public ProcessResult Add(T entity)
         {
-            _dbSet.Add(entity);
+            _dbSet.Add(entity); 
             var returnModel = new SuccessAddResult();
             returnModel.returnObj = entity;
             return returnModel;

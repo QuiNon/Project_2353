@@ -11,8 +11,6 @@ using Project_2353.Entity.Entities;
 
 namespace Project_2353.WebAPI.Controllers
 {
-    
-    
     public class UserController : BaseApiController
     {
         private readonly IBusinessService business;
@@ -23,56 +21,42 @@ namespace Project_2353.WebAPI.Controllers
         }
 
         [HttpPut]
-        public ProcessResult Put([FromBody] UserDTO user)
+        public ProcessResult Put([FromBody] UserAddDTO user)
         {
-            var result = business.User.RegisterUser(new UserDTO(new UserEntity()
-            {
-                Email = user.Email,
-                Firstname = user.Firstname,
-                LastName = user.LastName,
-                UserName = user.UserName
-            }));
+            var result = business.User.RegisterUser(user);
             return result;
         }
+
         [HttpPatch]
         public ProcessResult Patch([FromBody] UserDTO user)
         {
-            var result = business.User.EditUser(new UserDTO(new UserEntity()
-            {
-                Email = user.Email,
-                Firstname = user.Firstname,
-                LastName = user.LastName,
-                UserName = user.UserName,
-                Id = user.Id
-            }));
+            var result = business.User.EditUser(user);
             return result;
         }
+
         [HttpDelete]
         public ProcessResult Delete(int id)
         {
             var result = business.User.DeleteUser(id);
             return result;
         }
-        
-        [HttpGet]  
+
+        [HttpGet]
         [Route("{id:int}")]
         public ProcessResult GetBy(int id)
         {
-            var result = business.User.GetUserById(new UserDTO(new UserEntity()
-            {
-                Id = id
-            }));
+            var result = business.User.GetUserById(new UserDTO(id));
             return result;
         }
-        
-        [HttpGet]  
-        
+
+        [HttpGet]
         public ProcessResult Get()
         {
             var result = business.User.GetAllUser();
             return result;
         }
-        [HttpGet]  
+
+        [HttpGet]
         [Route("GetBy")]
         public ProcessResult Get(string userName)
         {

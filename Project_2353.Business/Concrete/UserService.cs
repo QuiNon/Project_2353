@@ -18,15 +18,14 @@ namespace Project_2353.Business.Concrete
             _unitOfWork = unitOfWork;
         }
 
-        public ProcessResult RegisterUser(UserDTO user)
+        public ProcessResult RegisterUser(UserAddDTO user)
         {
-            var dalResult= _unitOfWork.User.Add(new UserEntity()
-            {
-                Email = user.Email,
-                Firstname = user.Firstname,
-                LastName = user.LastName,
-                UserName = user.UserName
-            });
+            var dalResult = _unitOfWork.User.Add(new UserEntity(
+                    email: user.Email,
+                    firstname: user.FirstName,
+                    lastName: user.LastName,
+                    userName: user.UserName
+                ));
             if (!dalResult.State)
                 return dalResult;
             var saveRes = _unitOfWork.SaveChanges();
@@ -35,29 +34,35 @@ namespace Project_2353.Business.Concrete
 
         public ProcessResult EditUser(UserDTO user)
         {
-            var dalResult= _unitOfWork.User.Edit(user);
+            var dalResult = _unitOfWork.User.Edit(new UserEntity(
+                id: user.Id,
+                email: user.Email,
+                firstname: user.FirstName,
+                lastName: user.LastName,
+                userName: user.UserName
+            ));
             if (!dalResult.State)
                 return dalResult;
             var saveRes = _unitOfWork.SaveChanges();
-            return saveRes > 0 ? (ProcessResult) _unitOfWork.CreateResult().SuccessAddResult() : _unitOfWork.CreateResult().FailAddResult();
+            return saveRes > 0 ? (ProcessResult) _unitOfWork.CreateResult().SuccessUpdateResult() : _unitOfWork.CreateResult().FailUpdateResult();
         }
 
         public ProcessResult DeleteUser(int id)
         {
-            var dalResult=  _unitOfWork.User.Delete(new UserEntity()
+            var dalResult = _unitOfWork.User.Delete(new UserEntity()
             {
                 Id = id
             });
             if (!dalResult.State)
                 return dalResult;
             var saveRes = _unitOfWork.SaveChanges();
-            return saveRes > 0 ? (ProcessResult) _unitOfWork.CreateResult().SuccessAddResult() : _unitOfWork.CreateResult().FailAddResult();
+            return saveRes > 0 ? (ProcessResult) _unitOfWork.CreateResult().SuccessDeleteResult() : _unitOfWork.CreateResult().FailDeleteResult();
         }
 
         public ProcessResult GetUserById(UserDTO user)
         {
             var returnModel = _unitOfWork.User.GetBy(x => x.Id == user.Id).FirstOrDefault();
-            var returnResult = _unitOfWork.CreateResult().SuccessAddResult();
+            var returnResult = _unitOfWork.CreateResult().SuccessProcessResult();
             returnResult.returnObj = returnModel;
             return returnResult;
         }
@@ -65,18 +70,17 @@ namespace Project_2353.Business.Concrete
         public ProcessResult GetAllUser()
         {
             var returnModel = _unitOfWork.User.GetAll();
-            var returnResult = _unitOfWork.CreateResult().SuccessAddResult();
+            var returnResult = _unitOfWork.CreateResult().SuccessProcessResult();
             returnResult.returnObj = returnModel;
             return returnResult;
         }
 
         public ProcessResult GetAllUser(string userName)
         {
-            
             var returnModel = _unitOfWork.User.GetAll()
-                    .Where(x=>string.Equals(x.UserName, userName))
+                    .Where(x => string.Equals(x.UserName, userName))
                 ;
-            var returnResult = _unitOfWork.CreateResult().SuccessAddResult();
+            var returnResult = _unitOfWork.CreateResult().SuccessProcessResult();
             returnResult.returnObj = returnModel;
             return returnResult;
         }

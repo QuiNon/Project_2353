@@ -3,9 +3,29 @@
 namespace Project_2353.Entity.Entities
 {
     public class UserEntity : _BaseEntity
-    { 
+    {
+        public UserEntity(string email,string firstname,string lastName,string userName)
+        {
+            this.Email = email;
+            this.Firstname = firstname;
+            this.LastName = lastName;
+            this.UserName = userName;
+        }
+        public UserEntity(int id,string email,string firstname,string lastName,string userName)
+        {
+            this.Id = id;
+            this.Email = email;
+            this.Firstname = firstname;
+            this.LastName = lastName;
+            this.UserName = userName;
+        }
+
+        public UserEntity()
+        {
+            
+        }
         [Required(ErrorMessage = "UserName is required")]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "Name Should be minimum 3 characters and a maximum of 100 characters")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "UserName Should be minimum 3 characters and a maximum of 100 characters")]
         [DataType(DataType.Text)]
         public string UserName { get; set; }
         

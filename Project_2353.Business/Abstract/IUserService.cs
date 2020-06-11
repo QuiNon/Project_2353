@@ -5,7 +5,7 @@ namespace Project_2353.Business.Abstract
 {
     public interface IUserService
     {
-        ProcessResult RegisterUser(UserDTO user);
+        ProcessResult RegisterUser(UserAddDTO user);
         ProcessResult EditUser(UserDTO user);
         ProcessResult DeleteUser(int id);
         ProcessResult GetUserById(UserDTO user);

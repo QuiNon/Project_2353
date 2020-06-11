@@ -2,14 +2,14 @@ namespace Project_2353.Core.Factory.ResultFactory
 {
     public abstract class IProcessResult
     {
-        public abstract SuccessDeleteResult SuccessDeleteResult(string message = "");
-        public abstract SuccessUpdateResult SuccessUpdateResult(string message = "");
-        public abstract SuccessAddResult SuccessAddResult(string message = "");
-        public abstract SuccessAddResult SuccessProcessResult(string message = "");
-        public abstract FailDeleteResult FailDeleteResult(string message = "");
-        public abstract FailUpdateResult FailUpdateResult(string message = "");
-        public abstract FailAddResult FailAddResult(string message = ""); 
-        public abstract FailAddResult FailProcessResult(string message = ""); 
+        public abstract SuccessDeleteResult SuccessDeleteResult(string message = "Data delete successful");
+        public abstract SuccessUpdateResult SuccessUpdateResult(string message = "Data update successful");
+        public abstract SuccessAddResult SuccessAddResult(string message = "Data add successful");
+        public abstract SuccessAddResult SuccessProcessResult(string message = "Process successful");
+        public abstract FailDeleteResult FailDeleteResult(string message = "Data could not be deleted");
+        public abstract FailUpdateResult FailUpdateResult(string message = "Data could not be updated");
+        public abstract FailAddResult FailAddResult(string message = "Data could not be deleted"); 
+        public abstract FailAddResult FailProcessResult(string message = "Process failed"); 
     }
 
     public class _ProcessResult : IProcessResult
