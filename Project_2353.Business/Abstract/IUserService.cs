@@ -7,7 +7,7 @@ namespace Project_2353.Business.Abstract
     {
         ProcessResult RegisterUser(UserDTO user);
         ProcessResult EditUser(UserDTO user);
-        ProcessResult DeleteUser(UserDTO user);
+        ProcessResult DeleteUser(int id);
         ProcessResult GetUserById(UserDTO user);
         ProcessResult GetAllUser();
         ProcessResult GetAllUser(string userName);

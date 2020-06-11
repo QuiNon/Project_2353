@@ -48,12 +48,9 @@ namespace Project_2353.WebAPI.Controllers
             return result;
         }
         [HttpDelete]
-        public ProcessResult Delete([FromBody] int id)
+        public ProcessResult Delete(int id)
         {
-            var result = business.User.DeleteUser(new UserDTO(new UserEntity()
-            {
-                Id = id
-            }));
+            var result = business.User.DeleteUser(id);
             return result;
         }
         

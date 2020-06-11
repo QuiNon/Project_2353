@@ -27,20 +27,31 @@ namespace Project_2353.Business.Concrete
                 LastName = user.LastName,
                 UserName = user.UserName
             });
+            if (!dalResult.State)
+                return dalResult;
             var saveRes = _unitOfWork.SaveChanges();
-            return _unitOfWork.CreateResult().SuccessAddResult();
+            return saveRes > 0 ? (ProcessResult) _unitOfWork.CreateResult().SuccessAddResult() : _unitOfWork.CreateResult().FailAddResult();
         }
 
         public ProcessResult EditUser(UserDTO user)
         {
-            _unitOfWork.User.Edit(user);
-            return _unitOfWork.CreateResult().SuccessUpdateResult();
+            var dalResult= _unitOfWork.User.Edit(user);
+            if (!dalResult.State)
+                return dalResult;
+            var saveRes = _unitOfWork.SaveChanges();
+            return saveRes > 0 ? (ProcessResult) _unitOfWork.CreateResult().SuccessAddResult() : _unitOfWork.CreateResult().FailAddResult();
         }
 
-        public ProcessResult DeleteUser(UserDTO user)
+        public ProcessResult DeleteUser(int id)
         {
-            _unitOfWork.User.Delete(user);
-            return _unitOfWork.CreateResult().SuccessDeleteResult();
+            var dalResult=  _unitOfWork.User.Delete(new UserEntity()
+            {
+                Id = id
+            });
+            if (!dalResult.State)
+                return dalResult;
+            var saveRes = _unitOfWork.SaveChanges();
+            return saveRes > 0 ? (ProcessResult) _unitOfWork.CreateResult().SuccessAddResult() : _unitOfWork.CreateResult().FailAddResult();
         }
 
         public ProcessResult GetUserById(UserDTO user)
@@ -63,7 +74,7 @@ namespace Project_2353.Business.Concrete
         {
             
             var returnModel = _unitOfWork.User.GetAll()
-                    .Where(x=>String.Equals(x.UserName, userName, StringComparison.CurrentCultureIgnoreCase))
+                    .Where(x=>string.Equals(x.UserName, userName))
                 ;
             var returnResult = _unitOfWork.CreateResult().SuccessAddResult();
             returnResult.returnObj = returnModel;

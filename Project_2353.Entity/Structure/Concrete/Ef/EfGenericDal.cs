@@ -7,11 +7,12 @@ using Microsoft.EntityFrameworkCore.Query;
 using Project_2353.Core.Factory.ResultFactory;
 using Project_2353.Entity.Abstract;
 using Project_2353.Entity.Contexts;
+using Project_2353.Entity.Entities;
 using Project_2353.Entity.Structure.Abstract;
 
 namespace Project_2353.Entity.Structure.Concrete.Ef
 {
-    public class EfGenericDal<T> : IGenericDal<T> where T : class
+    public class EfGenericDal<T> : IGenericDal<T> where T : _BaseEntity
     {
         private readonly Project2353DefaultDbContext _dbContext;
         private readonly DbSet<T> _dbSet;
@@ -24,7 +25,7 @@ namespace Project_2353.Entity.Structure.Concrete.Ef
 
         public IQueryable<T> GetAll()
         {
-            return _dbSet;
+            return _dbSet.Where(x => !x.IsDeleted);
         }
 
         public IQueryable<T> GetBy(Expression<Func<T, bool>> predicate)
@@ -48,8 +49,14 @@ namespace Project_2353.Entity.Structure.Concrete.Ef
 
         public ProcessResult Delete(T entity)
         {
-            _dbSet.Attach(entity);
-            _dbContext.Entry(entity).State = EntityState.Modified;
+            var x = GetAll().FirstOrDefault(x => x.Id == entity.Id);
+            if (x == null)
+                return new FailDeleteResult();
+
+            x.IsDeleted = true;
+
+            _dbSet.Attach(x);
+            _dbContext.Entry(x).State = EntityState.Modified;
 
             var returnModel = new SuccessDeleteResult();
             return returnModel;
